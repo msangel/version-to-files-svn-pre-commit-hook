@@ -40,7 +40,7 @@ workingDir =  WScript.Arguments.Item(3)
 
 pathToRootOfSVNRepo = fso.GetAbsolutePathName(pathToRootOfSVNRepo)
 If Not(Err.Number = 0) Then
-			handleError("Can not get absolute path name for pathToRootOfSVNRepo: " & pathToRootOfSVNRepo & " , please set this variable as absolute path")
+	handleError("Can not get absolute path name for pathToRootOfSVNRepo: " & pathToRootOfSVNRepo & " , please set this variable as absolute path")
 End If
 If Not(fso.FolderExists(pathToRootOfSVNRepo) ) Then
 	handleError("This pathToRootOfSVNRepo is not exist: " & pathToRootOfSVNRepo & " , but it must exist, fix your settings in script or check this folder if exist")
@@ -49,7 +49,7 @@ End If
 
 pathToWatchingDirectory = fso.GetAbsolutePathName(pathToWatchingDirectory)
 If Not(Err.Number = 0) Then
-			handleError("Can not get absolute path name for pathToWatchingDirectory: " & pathToWatchingDirectory & " , please set this variable as absolute path")
+	handleError("Can not get absolute path name for pathToWatchingDirectory: " & pathToWatchingDirectory & " , please set this variable as absolute path")
 End If
 If Not(fso.FolderExists(pathToWatchingDirectory) ) Then
 	handleError("This pathToWatchingDirectory is not exist: " & pathToWatchingDirectory & " , but it must exist, fix your settings in script or check this folder if exist")
@@ -141,8 +141,8 @@ Next
 If Not(needToWrite) Then
 	' We do not need to write files as far as there are already latests versions
 	If Not(Err.Number = 0) Then
-				' but will check for error before, if one
-				handleError("Unexpected error")
+		' but will check for error before, if one
+		handleError("Unexpected error")
 	End If
 	Wscript.quit(0)
 End If
@@ -152,17 +152,17 @@ End If
 For Each currentFile In whereToWriteArr
 	Set objFileToWrite = fso.OpenTextFile(currentFile,2,true)
 	If Not(Err.Number = 0) Then
-			handleError("Can not open file " & currentFile & " for writing.")
+		handleError("Can not open file " & currentFile & " for writing.")
 	End If
 	objFileToWrite.WriteLine(rev)
 	objFileToWrite.Close
 	If Not(Err.Number = 0) Then
-			handleError("Can not write to file " & currentFile)
+		handleError("Can not write to file " & currentFile)
 	End If
 Next
 
 If Not(Err.Number = 0) Then
-			handleError("Unexpected error")
+	handleError("Unexpected error")
 End If
 	
 ' Return 'ok' code
