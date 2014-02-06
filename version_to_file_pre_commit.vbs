@@ -3,7 +3,7 @@
 ' License: Apache Public License V2, see "LICENSE" file for details.
 ' Fresh copy always available here: https://github.com/msangel/version-to-files-svn-pre-commit-hook
 
-' rewrited by timhok
+' fixing by timhok
 
 pathToRootOfSVNRepo = "D:\home\source_code\"
 pathToWatchingDirectory = "D:\home\source_code\hooktest"
@@ -49,9 +49,13 @@ If Not(Err.Number = 0) Then handleError("Can not get absolute path name for path
 If Not(fso.FolderExists(pathToWatchingDirectory)) Then handleError("This pathToWatchingDirectory is not exist: " & pathToWatchingDirectory & " , but it must exist, fix your settings in script or check this folder if exist")
 
 
-
 If Len(workingDir) > Len(pathToWatchingDirectory) Then  workingDir = Left(workingDir, Len(pathToWatchingDirectory))
 	' workingDir is bigger then pathToWatchingDirectory, so make it shorter
+
+
+pathToWatchingDirectory = iif(right(pathToWatchingDirectory, 1) = "\", pathToWatchingDirectory, pathToWatchingDirector & "\")
+workingDir = iif(right(workingDir, 1) = "\", workingDir, workingDir & "\")
+' add last slash to help comparing work correctly
 
 ' if our real working dir is equals to that is in settings
 '       (where to search        ,what search)
