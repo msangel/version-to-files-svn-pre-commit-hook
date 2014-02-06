@@ -1,7 +1,7 @@
 ' Pre-commit hook by msangel (msangel.com.ua) (c) 2014 
 ' This software is provided "as is", without warranty of any kind.
 ' License: Apache Public License V2, see "LICENSE" file for details.
-' Fresh copy always available here: 
+' Fresh copy always available here: https://github.com/msangel/version-to-files-svn-pre-commit-hook
 
 pathToRootOfSVNRepo = "D:\home\source_code\"
 pathToWatchingDirectory = "D:\home\source_code\hooktest"
