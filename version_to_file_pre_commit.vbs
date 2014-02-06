@@ -3,6 +3,8 @@
 ' License: Apache Public License V2, see "LICENSE" file for details.
 ' Fresh copy always available here: https://github.com/msangel/version-to-files-svn-pre-commit-hook
 
+' fixing by timhok
+
 pathToRootOfSVNRepo = "D:\home\source_code\"
 pathToWatchingDirectory = "D:\home\source_code\hooktest"
 whereToWriteArr = Array ("D:\home\source_code\hooktest\1.txt", "D:\home\source_code\hooktest\2.txt")
@@ -13,7 +15,7 @@ whereToWriteArr = Array ("D:\home\source_code\hooktest\1.txt", "D:\home\source_c
 On Error Resume Next
 
 Set fso = CreateObject ("Scripting.FileSystemObject") 
-Set stderr = fso.GetStandardStream (2) 
+Set stderr = fso.GetStandardStream(2) 
 
 Sub handleError(message)
 	stderr.WriteLine "Message: " & message
@@ -29,8 +31,7 @@ count = WScript.Arguments.Count
 If count = 0 Then
 	WScript.Echo "This is pre-commit hook by msangel, open it source for configure and more details."
 	Wscript.quit(0)
-End If
-If count < 3  Then
+elseif count < 3  Then
 	WScript.Echo "Wrong usage. Script expect at least 3 args. Please check usage and if all correct  - contact author."
 	Wscript.quit(0)
 End If
@@ -39,31 +40,25 @@ workingDir =  WScript.Arguments.Item(3)
 ' this is checking before
 
 pathToRootOfSVNRepo = fso.GetAbsolutePathName(pathToRootOfSVNRepo)
-If Not(Err.Number = 0) Then
-	handleError("Can not get absolute path name for pathToRootOfSVNRepo: " & pathToRootOfSVNRepo & " , please set this variable as absolute path")
-End If
-If Not(fso.FolderExists(pathToRootOfSVNRepo) ) Then
-	handleError("This pathToRootOfSVNRepo is not exist: " & pathToRootOfSVNRepo & " , but it must exist, fix your settings in script or check this folder if exist")
-End If
+If Not(Err.Number = 0) Then handleError("Can not get absolute path name for pathToRootOfSVNRepo: " & pathToRootOfSVNRepo & " , please set this variable as absolute path")
+If Not(fso.FolderExists(pathToRootOfSVNRepo)) Then handleError("This pathToRootOfSVNRepo is not exist: " & pathToRootOfSVNRepo & " , but it must exist, fix your settings in script or check this folder if exist")
 
 
 pathToWatchingDirectory = fso.GetAbsolutePathName(pathToWatchingDirectory)
-If Not(Err.Number = 0) Then
-	handleError("Can not get absolute path name for pathToWatchingDirectory: " & pathToWatchingDirectory & " , please set this variable as absolute path")
-End If
-If Not(fso.FolderExists(pathToWatchingDirectory) ) Then
-	handleError("This pathToWatchingDirectory is not exist: " & pathToWatchingDirectory & " , but it must exist, fix your settings in script or check this folder if exist")
-End If
+If Not(Err.Number = 0) Then handleError("Can not get absolute path name for pathToWatchingDirectory: " & pathToWatchingDirectory & " , please set this variable as absolute path")
+If Not(fso.FolderExists(pathToWatchingDirectory)) Then handleError("This pathToWatchingDirectory is not exist: " & pathToWatchingDirectory & " , but it must exist, fix your settings in script or check this folder if exist")
 
 
-
-If Len(workingDir)> Len(pathToWatchingDirectory) Then 
+If Len(workingDir) > Len(pathToWatchingDirectory) Then  workingDir = Left(workingDir, Len(pathToWatchingDirectory))
 	' workingDir is bigger then pathToWatchingDirectory, so make it shorter
-	workingDir = Left(workingDir,Len(pathToWatchingDirectory))
-End If
+
+
+pathToWatchingDirectory = iif(right(pathToWatchingDirectory, 1) = "\", pathToWatchingDirectory, pathToWatchingDirector & "\")
+workingDir = iif(right(workingDir, 1) = "\", workingDir, workingDir & "\")
+' add last slash to help comparing work correctly
 
 ' if our real working dir is equals to that is in settings
-'          where to search             , what search
+'       (where to search        ,what search)
 If InStr(pathToWatchingDirectory,workingDir) = 1 Then
 	' Yes, it is in our directory, script is working
 	' just continue
@@ -76,7 +71,7 @@ End If
 
 
 
-' Create worcking objects
+' Create working objects
 Set objShell = WScript.CreateObject("WScript.Shell")
 Set regEx = New RegExp
 regEx.Pattern = "Last committed at revision (\d+)"
@@ -93,19 +88,16 @@ Do While Not objExecObject.StdOut.AtEndOfStream
 		Set matches = regEx.Execute(line)
 		strRev = matches(0).SubMatches(0)
     End If
-	strText = strText & line &  (Chr(13) & Chr(10))
+	strText = strText & line & vbNewLine
 Loop
 
-If Len(strText) = 0 Then
-	handleError("Problem with subwcrev - check if you have it in environment")
-End If
+If Len(strText) = 0 Then handleError("Problem with subwcrev - check if you have it in environment")
 
 
 
-' Cheking
-If Len(strRev) = 0 Then
-	handleError("Revision number can not be found. Be sure you set pathToRootOfSVNRepo to real repo or check environment, More details: " & strText)
-End If
+' Checking
+If Len(strRev) = 0 Then handleError("Revision number can not be found. Be sure you set pathToRootOfSVNRepo to real repo or check environment, More details: " & strText)
+
 rev = CInt(strRev)
 rev = rev + 1
 
