@@ -2,7 +2,7 @@
 ' This software is provided "as is", without warranty of any kind.
 ' License: Apache Public License V2, see "LICENSE" file for details.
 ' Fresh copy always available here: https://github.com/msangel/version-to-files-svn-pre-commit-hook
-
+ 
 pathToRootOfSVNRepo = "D:\home\source_code\"
 pathToWatchingDirectory = "D:\home\source_code\hooktest"
 whereToWriteArr = Array ("D:\home\source_code\hooktest\1.txt", "D:\home\source_code\hooktest\2.txt")
@@ -24,6 +24,34 @@ Sub handleError(message)
 	End If
 	Wscript.quit(1)
 End Sub
+
+Sub exitFine()
+	If Not(Err.Number = 0) Then
+		handleError("Unexpected error")
+	End If
+	' Return 'ok' code
+	Wscript.quit(0)
+End Sub
+
+
+Function isSubFolder(folderParent, folderChild)
+    If Len(folderParent) > Len(folderChild) Then
+		isSubFolder = False
+	ElseIf Len(folderChild) = Len(folderParent) Then
+			isSubFolder = StrComp(folderParent, folderChild) = 0
+	Else
+		' ok, child is longer
+		folderChild = fso.GetParentFolderName(folderChild)
+		If Len(folderChild) > Len(folderParent) Then
+			isSubFolder =  isSubFolder(folderParent, folderChild)
+		ElseIf Len(folderChild) = Len(folderParent) Then
+			isSubFolder = StrComp(folderParent, folderChild) = 0
+		Else
+			isSubFolder = False
+		End If
+	End If
+End Function
+
 
 count = WScript.Arguments.Count
 If count = 0 Then
@@ -55,28 +83,25 @@ If Not(fso.FolderExists(pathToWatchingDirectory) ) Then
 	handleError("This pathToWatchingDirectory is not exist: " & pathToWatchingDirectory & " , but it must exist, fix your settings in script or check this folder if exist")
 End If
 
-
-
-If Len(workingDir)> Len(pathToWatchingDirectory) Then 
-	' workingDir is bigger then pathToWatchingDirectory, so make it shorter
-	workingDir = Left(workingDir,Len(pathToWatchingDirectory))
-End If
-
-' if our real working dir is equals to that is in settings
-'          where to search             , what search
-If InStr(pathToWatchingDirectory,workingDir) = 1 Then
+' If workingDir is subfolder of watching directory OR watching directory is subfolder of workingDir
+' note - you always can change behavior for your needs
+If (isSubFolder(pathToWatchingDirectory, workingDir)) Or (isSubFolder(workingDir, pathToWatchingDirectory)) Then
 	' Yes, it is in our directory, script is working
 	' just continue
 Else
 	' No, it is NOT in our directory, script is NOT working, but commit will do
-	Wscript.quit(0)
+	exitFine()
+End If
+
+
+' sometimes fall at this point
+If Not(Err.Number = 0) Then
+	handleError("Unexpected error")
 End If
 
 
 
-
-
-' Create worcking objects
+' Create working objects
 Set objShell = WScript.CreateObject("WScript.Shell")
 Set regEx = New RegExp
 regEx.Pattern = "Last committed at revision (\d+)"
@@ -102,7 +127,7 @@ End If
 
 
 
-' Cheking
+' Checking
 If Len(strRev) = 0 Then
 	handleError("Revision number can not be found. Be sure you set pathToRootOfSVNRepo to real repo or check environment, More details: " & strText)
 End If
@@ -140,11 +165,8 @@ Next
 
 If Not(needToWrite) Then
 	' We do not need to write files as far as there are already latests versions
-	If Not(Err.Number = 0) Then
-		' but will check for error before, if one
-		handleError("Unexpected error")
-	End If
-	Wscript.quit(0)
+	' but will check for error before, if one
+	exitFine()
 End If
 
 
@@ -161,10 +183,5 @@ For Each currentFile In whereToWriteArr
 	End If
 Next
 
-If Not(Err.Number = 0) Then
-	handleError("Unexpected error")
-End If
-	
-' Return 'ok' code
-Wscript.quit(0)
 
+exitFine()
