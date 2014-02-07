@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Version-to-files-svn-pre-commit-hook by msangel</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Version-to-files-svn-pre-commit-hook</h1>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook">View the Project on GitHub <small>msangel/version-to-files-svn-pre-commit-hook</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="version-to-files-svn-pre-commit-hook" class="anchor" href="#version-to-files-svn-pre-commit-hook"><span class="octicon octicon-link"></span></a>version-to-files-svn-pre-commit-hook</h1>
+
+<p>This is simple script for subversion. With this script every time you commit your code, you can write current version number to selected file or set of files. And all - in automatic way. So you will no longer forget put actual version number in your project.</p>
+
+<p>This script is written in vbscript and so is working on every Windows OS version without any additional libraries and/or software.</p>
+
+<p>For setting this script:</p>
+
+<ol>
+<li>just <a href="https://raw.github.com/msangel/version-to-files-svn-pre-commit-hook/master/version_to_file_pre_commit.vbs">download it</a>
+</li>
+<li>
+<p>configure SVN(this is for TortoiseSVN, but other programs for SVN shuld have similar config in options)</p>
+
+<ol>
+<li>Find your repository in explorer</li>
+<li>In context menu of repository folder select TortoiseSVN/Settings</li>
+<li><p>In settings window select "Hook Scripts"
+<img src="http://cs606523.vk.me/v606523044/1c23/nAcUZkPYbNg.jpg" alt="example settings" title="example settings"></p></li>
+<li>
+<p>Select "Add", and fill all with this data: </p>
+
+<ol>
+<li>Hook Type: Pre-Commit Hook</li>
+<li>Working Copy Path: any (do not used in our script, I just point to root svn directory)</li>
+<li>Command Line To Execute: "wscript &lt; path_to_cript &gt;" (This is my Command Line To Execute: <code>wscript D:\home\source_code\hooktest\version_to_file_pre_commit.vbs</code>)</li>
+<li>Check "Wait for the script to finish" and "Hide the script while running"
+<img src="http://cs606523.vk.me/v606523044/1c13/-Y8QyIsBxD0.jpg" alt="example settings" title="example settings">
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>configure script
+
+<ol>
+<li>Open script via text editor</li>
+<li>Assign to <code>pathToRootOfSVNRepo</code> path to your svn root folder</li>
+<li>Assign to <code>pathToWatchingDirectory</code> path, where you need to track changes</li>
+<li>Assign to <code>whereToWriteArr</code> array of files names, in what you need write version number
+<img src="http://cs606523.vk.me/v606523044/1c2c/Oa_YQ_9YG-s.jpg" alt="example settings" title="example settings">
+</li>
+</ol>
+</li>
+<li>Save all and test it!</li>
+</ol><p>If you have any troubles with working with this script, I am always open for question. My e-mail is <a href="mailto:h6.msangel@gmail.com">h6.msangel@gmail.com</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/msangel">msangel</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
