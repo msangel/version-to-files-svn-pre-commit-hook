@@ -4,34 +4,50 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Version-to-files-svn-pre-commit-hook by msangel</title>
-
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
     <div class="wrapper">
-      <header>
-        <h1>Version-to-files-svn-pre-commit-hook</h1>
-        <p></p>
 
-        <p class="view"><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook">View the Project on GitHub <small>msangel/version-to-files-svn-pre-commit-hook</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/msangel/version-to-files-svn-pre-commit-hook">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
       <section>
+        <div id="title">
+          <h1>Version-to-files-svn-pre-commit-hook</h1>
+          <p></p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/msangel">msangel</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
         <h1>
 <a name="version-to-files-svn-pre-commit-hook" class="anchor" href="#version-to-files-svn-pre-commit-hook"><span class="octicon octicon-link"></span></a>version-to-files-svn-pre-commit-hook</h1>
 
 <p>This is simple script for subversion. With this script every time you commit your code, you can write current version number to selected file or set of files. And all - in automatic way. So you will no longer forget put actual version number in your project.</p>
+
+<h6>
+<a name="how-it-works" class="anchor" href="#how-it-works"><span class="octicon octicon-link"></span></a>How it works</h6>
+
+<p>Version - it is number in SVN log.
+We need to have value of this "version" always actual, so there should be in some file stored this value. But we do not know - what number will get this revision, till we will not commit it. Therefore we need "guess" this number, in simple way  - adding to previous value one. We can guess definitely only if we are working alone in a project. But if we have a teem, there can be some collisions(this is common SVN problem). And this question is more from organizing working process. </p>
 
 <p>This script is written in vbscript and so is working on every Windows OS version without any additional libraries and/or software.</p>
 
@@ -41,7 +57,7 @@
 <li>just <a href="https://raw.github.com/msangel/version-to-files-svn-pre-commit-hook/master/version_to_file_pre_commit.vbs">download it</a>
 </li>
 <li>
-<p>configure SVN(this is for TortoiseSVN, but other programs for SVN shuld have similar config in options)</p>
+<p>configure SVN(this is for TortoiseSVN, but other programs for SVN should have similar config in options)</p>
 
 <ol>
 <li>Find your repository in explorer</li>
@@ -68,20 +84,18 @@
 <li>Open script via text editor</li>
 <li>Assign to <code>pathToRootOfSVNRepo</code> path to your svn root folder</li>
 <li>Assign to <code>pathToWatchingDirectory</code> path, where you need to track changes</li>
-<li>Assign to <code>whereToWriteArr</code> array of files names, in what you need write version number
-<img src="http://cs606523.vk.me/v606523044/1c2c/Oa_YQ_9YG-s.jpg" alt="example settings" title="example settings">
-</li>
+<li>Assign to <code>whereToWriteArr</code> array of files names, in what you need write version number</li>
 </ol>
 </li>
-<li>Save all and test it!</li>
-</ol><p>If you have any troubles with working with this script, I am always open for question. My e-mail is <a href="mailto:h6.msangel@gmail.com">h6.msangel@gmail.com</a></p>
+</ol><p>This is my example:
+    <img src="http://cs606523.vk.me/v606523044/1c2c/Oa_YQ_9YG-s.jpg" alt="example settings" title="example settings">
+4. Save all and test it!</p>
+
+<p>If you have any troubles with working with this script, I am always open for question. My e-mail is <a href="mailto:h6.msangel@gmail.com">h6.msangel@gmail.com</a></p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/msangel">msangel</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
