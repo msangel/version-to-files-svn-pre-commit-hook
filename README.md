@@ -3,12 +3,16 @@ version-to-files-svn-pre-commit-hook
 
 This is simple script for subversion. With this script every time you commit your code, you can write current version number to selected file or set of files. And all - in automatic way. So you will no longer forget put actual version number in your project.
 
+###### How it works
+Version - it is number in SVN log.
+We need to have value of this "version" always actual, so there should be in some file stored this value. But we do not know - what number will get this revision, till we will not commit it. Therefore we need "guess" this number, in simple way  - adding to previous value one. We can guess definitely only if we are working alone in a project. But if we have a teem, there can be some collisions(this is common SVN problem). And this question is more from organizing working process. 
+
 This script is written in vbscript and so is working on every Windows OS version without any additional libraries and/or software.
 
 For setting this script:
 
 1. just [download it](https://raw.github.com/msangel/version-to-files-svn-pre-commit-hook/master/version_to_file_pre_commit.vbs)
-2. configure SVN(this is for TortoiseSVN, but other programs for SVN shuld have similar config in options)
+2. configure SVN(this is for TortoiseSVN, but other programs for SVN should have similar config in options)
     1. Find your repository in explorer
     2. In context menu of repository folder select TortoiseSVN/Settings
     3. In settings window select "Hook Scripts"
@@ -25,11 +29,12 @@ For setting this script:
     2. Assign to `pathToRootOfSVNRepo` path to your svn root folder
     3. Assign to `pathToWatchingDirectory` path, where you need to track changes
     4. Assign to `whereToWriteArr` array of files names, in what you need write version number
+
+This is my example:
     ![example settings](http://cs606523.vk.me/v606523044/1c2c/Oa_YQ_9YG-s.jpg "example settings")
 4. Save all and test it!
 
 If you have any troubles with working with this script, I am always open for question. My e-mail is h6.msangel@gmail.com
-    
 
 
 
